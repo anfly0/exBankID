@@ -3,10 +3,23 @@ defmodule ExBankID.HttpRequest do
   @cert_file __DIR__ <> "/../../assets/test.pem"
   @headers [{"Content-Type", "application/json"}]
 
-  def send_request(
-        payload,
-        opt \\ []
-      )
+  @type payload() ::
+          %ExBankID.Auth.Payload{}
+          | %ExBankID.Auth.Payload{}
+          | %ExBankID.Cancel.Payload{}
+          | %ExBankID.Collect.Payload{}
+          | %ExBankID.Sign.Payload{}
+
+  @type response() ::
+          %ExBankID.Collect.Response{}
+          | %ExBankID.Auth.Response{}
+          | %ExBankID.Sign.Response{}
+          | %{}
+
+  @type opts() :: [url: String.t(), cert_file: String.t()]
+
+  @spec send_request(payload(), opts()) :: {:error, %ExBankID.Error.Api{} | Binary} | {:ok, response()}
+  def send_request(payload, opt \\ [])
 
   def send_request(payload = %ExBankID.Auth.Payload{}, opts) when is_list(opts) do
     do_send_request(:auth, payload, opts)
