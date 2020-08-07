@@ -2,13 +2,15 @@
 ![license: MIT](https://img.shields.io/github/license/anfly0/exBankID)
 ![test](https://img.shields.io/github/workflow/status/anfly0/exbankid/Elixir%20CI/master)
 ## Introduction
-exBankID is a simple stateless API-client for the Swedish BankID API.
-
-__This is very much a work in progress! All help is more than welcome__
+exBankID is a simple stateless elixir client for the Swedish BankID API.
 
 ## Usage
 
 ```elixir
+
+# Config - all functions in the ExBankID takes the following optional argument
+# [url: "url to BankID API", cert_file: "/path/to/your/BankID/certificate.pem"]
+
 # Authenticate with ip address and optionally the personal number (12 digits)
 iex> {:ok, authentication} ExBankID.auth("1.1.1.1", personal_number: "190000000000")
 {:ok,
@@ -85,7 +87,6 @@ iex> {:ok, collect_response} = ExBankID.collect("9b69419c-b3ac-4f7c-9796-bf54f1a
 iex> {:ok, _} = ExBankID.cancel(authentication)
 {:ok, %{}}
 
-# Config - all functions in the ExBankID takes the following optional argument
-# [url: "url to BankID API", cert_file: "/path/to/your/BankID/certificate.pem"]  
+
 
 ```
