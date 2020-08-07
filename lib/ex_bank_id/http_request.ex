@@ -72,8 +72,11 @@ defmodule ExBankID.HttpRequest do
 
   defp handle_response({:ok, %HTTPoison.Response{status_code: code, body: body}}, _) do
     case Poison.decode(body, as: %ExBankID.Error.Api{}) do
-      {:ok, data} -> {:error, data}
-      {:error, _, _} -> {:error, "Http code #{code}, could not decode body"}
+      {:ok, data} ->
+        {:error, data}
+
+      {:error, _} ->
+        {:error, "Http code #{code}, could not decode body"}
     end
   end
 
