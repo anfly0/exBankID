@@ -1,5 +1,5 @@
 # exBankID
-
+![license: MIT](https://img.shields.io/github/license/anfly0/exBankID)
 
 ## Introduction
 exBankID is a simple stateless API-client for the Swedish BankID API.
