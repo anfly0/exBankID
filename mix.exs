@@ -4,13 +4,15 @@ defmodule ExBankID.MixProject do
   def project do
     [
       app: :ex_bank_id,
-      version: "0.0.1",
+      version: "0.1.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
-      deps: deps()
+      deps: deps(),
+      description: description(),
+      package: package()
     ]
   end
 
@@ -30,9 +32,19 @@ defmodule ExBankID.MixProject do
       {:credo, "~> 1.4", only: [:dev], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:bypass, "~> 1.0", only: :test},
-      {:excoveralls, "~> 0.10", only: :test}
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
+    ]
+  end
+
+  defp description(), do: "exBankID is a simple stateless API-client for the Swedish BankID API"
+
+  defp package() do
+    [
+      name: "exBankID",
+      files: ~w(lib .formatter.exs mix.exs README* LICENSE* assets),
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/anfly0/exBankID"}
     ]
   end
 

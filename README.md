@@ -2,10 +2,14 @@
 ![license: MIT](https://img.shields.io/github/license/anfly0/exBankID)
 ![test](https://img.shields.io/github/workflow/status/anfly0/exbankid/Elixir%20CI/master)
 [![Coverage Status](https://coveralls.io/repos/github/anfly0/exBankID/badge.svg?branch=master)](https://coveralls.io/github/anfly0/exBankID?branch=master)
+![hex version](https://img.shields.io/hexpm/v/exbankid)
 ## Introduction
 exBankID is a simple stateless elixir client for the Swedish BankID API.
 
-## Usage
+## Installation
+This library is available as a package on [hex.pm](https://hex.pm/packages/exBankID) and can be installed by
+adding ```{:ex_bank_id, "~> 0.1.0", hex: :exBankID}``` to your list of dependencies in ```mix.exs```
+## Basic usage
 
 ```elixir
 
