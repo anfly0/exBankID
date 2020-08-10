@@ -17,7 +17,7 @@ adding ```{:ex_bank_id, "~> 0.1.0", hex: :exBankID}``` to your list of dependenc
 # [url: "url to BankID API", cert_file: "/path/to/your/BankID/certificate.pem"]
 
 # Authenticate with ip address and optionally the personal number (12 digits)
-iex> {:ok, authentication} ExBankID.auth("1.1.1.1", personal_number: "190000000000")
+iex> {:ok, authentication} = ExBankID.auth("1.1.1.1", personal_number: "190000000000")
 {:ok,
  %ExBankID.Auth.Response{
    autoStartToken: "3241031e-d849-4e3a-a662-1a36e65eff93",
