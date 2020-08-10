@@ -13,4 +13,6 @@ defmodule Test.Helpers do
       )
     end
   end
+
+  def cert_file(), do: __DIR__ <> "../../assets/test.pem"
 end

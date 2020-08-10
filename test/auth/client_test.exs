@@ -32,7 +32,8 @@ defmodule Test.Auth.Client do
       Test.Helpers.endpoint_handler(200, response_payload, expected_request_payload)
     )
 
-    assert ^expected_response = ExBankID.auth("1.1.1.1", url: Test.Helpers.get_url(bypass.port()))
+    assert ^expected_response =
+             ExBankID.auth("1.1.1.1", url: Test.Helpers.get_url(bypass.port()), cert_file: Test.Helpers.cert_file())
   end
 
   test "client handles successful auth request with personal number", %{bypass: bypass} do
@@ -64,13 +65,13 @@ defmodule Test.Auth.Client do
     assert ^expected_response =
              ExBankID.auth("1.1.1.1",
                url: Test.Helpers.get_url(bypass.port()),
-               personal_number: "190000000000"
+               personal_number: "190000000000",
+               cert_file: Test.Helpers.cert_file()
              )
   end
 
   test "client handles unsuccessful auth request", %{bypass: bypass} do
-    expected_response =
-      {:error, %ExBankID.Error.Api{errorCode: "invalidParameters", details: "No such order"}}
+    expected_response = {:error, %ExBankID.Error.Api{errorCode: "invalidParameters", details: "No such order"}}
 
     expected_request_payload = %{"endUserIp" => "1.1.1.1"}
 
@@ -86,6 +87,7 @@ defmodule Test.Auth.Client do
       Test.Helpers.endpoint_handler(400, response_payload, expected_request_payload)
     )
 
-    assert ^expected_response = ExBankID.auth("1.1.1.1", url: Test.Helpers.get_url(bypass.port()))
+    assert ^expected_response =
+             ExBankID.auth("1.1.1.1", url: Test.Helpers.get_url(bypass.port()), cert_file: Test.Helpers.cert_file())
   end
 end
