@@ -11,6 +11,8 @@ defmodule ExBankID.Cancel do
       required: true
     ]
   ]
+  @doc "Supported options:\n#{NimbleOptions.docs(@options)}"
+
   def cancel(token, opts \\ [])
 
   def cancel(token, opts) when is_binary(token) do

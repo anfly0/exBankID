@@ -13,6 +13,7 @@ defmodule ExBankID.Auth do
       # TODO: Add validator
     ]
   ]
+  @doc "Supported options:\n#{NimbleOptions.docs(@options)}"
 
   def auth(ip_address, opts) when is_binary(ip_address) and is_list(opts) do
     with {:ok, opts} <- NimbleOptions.validate(opts, @options),

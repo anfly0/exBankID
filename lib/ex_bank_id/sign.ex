@@ -18,6 +18,7 @@ defmodule ExBankID.Sign do
       type: :string
     ]
   ]
+  @doc "Supported options:\n#{NimbleOptions.docs(@options)}"
 
   def sign(ip_address, user_visible_data, opts \\ [])
       when is_binary(ip_address) and is_binary(user_visible_data) and is_list(opts) do

@@ -11,6 +11,8 @@ defmodule ExBankID.Collect do
       required: true
     ]
   ]
+  @doc "Supported options:\n#{NimbleOptions.docs(@options)}"
+
   def collect(token, opts \\ [])
 
   def collect(token, opts) when is_binary(token) do
