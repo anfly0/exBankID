@@ -19,7 +19,10 @@ defmodule Test.Cancel.Client do
     )
 
     assert ^expected_response =
-             ExBankID.cancel("131daac9-16c6-4618-beb0-365768f37288", url: Test.Helpers.get_url(bypass.port()))
+             ExBankID.cancel("131daac9-16c6-4618-beb0-365768f37288",
+               url: Test.Helpers.get_url(bypass.port()),
+               cert_file: Test.Helpers.cert_file()
+             )
   end
 
   test "Client handles successful cancel request give a auth response struct", %{bypass: bypass} do
@@ -36,7 +39,8 @@ defmodule Test.Cancel.Client do
 
     assert ^expected_response =
              ExBankID.cancel(%ExBankID.Auth.Response{orderRef: "131daac9-16c6-4618-beb0-365768f37288"},
-               url: Test.Helpers.get_url(bypass.port())
+               url: Test.Helpers.get_url(bypass.port()),
+               cert_file: Test.Helpers.cert_file()
              )
   end
 
@@ -54,7 +58,8 @@ defmodule Test.Cancel.Client do
 
     assert ^expected_response =
              ExBankID.cancel(%ExBankID.Sign.Response{orderRef: "131daac9-16c6-4618-beb0-365768f37288"},
-               url: Test.Helpers.get_url(bypass.port())
+               url: Test.Helpers.get_url(bypass.port()),
+               cert_file: Test.Helpers.cert_file()
              )
   end
 
@@ -74,6 +79,9 @@ defmodule Test.Cancel.Client do
     )
 
     assert ^expected_response =
-             ExBankID.cancel("131daac9-16c6-4618-beb0-365768f37288", url: Test.Helpers.get_url(bypass.port()))
+             ExBankID.cancel("131daac9-16c6-4618-beb0-365768f37288",
+               url: Test.Helpers.get_url(bypass.port()),
+               cert_file: Test.Helpers.cert_file()
+             )
   end
 end
