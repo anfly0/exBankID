@@ -33,7 +33,8 @@ defmodule ExBankID.MixProject do
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:bypass, "~> 1.0", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
-      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
+      {:nimble_options, "~> 0.3.0"}
     ]
   end
 
