@@ -1,6 +1,4 @@
 defmodule ExBankID.HttpRequest do
-  @base_url "https://appapi2.test.bankid.com/rp/v5.1/"
-  @cert_file __DIR__ <> "/../../assets/test.pem"
   @headers [{"Content-Type", "application/json"}]
 
   @type payload() ::
@@ -47,12 +45,12 @@ defmodule ExBankID.HttpRequest do
     |> handle_response(action)
   end
 
-  defp url(:auth, opts), do: Keyword.get(opts, :url, @base_url) <> "/auth"
-  defp url(:sign, opts), do: Keyword.get(opts, :url, @base_url) <> "/sign"
-  defp url(:collect, opts), do: Keyword.get(opts, :url, @base_url) <> "/collect"
-  defp url(:cancel, opts), do: Keyword.get(opts, :url, @base_url) <> "/cancel"
+  defp url(:auth, opts), do: Keyword.get(opts, :url) <> "/auth"
+  defp url(:sign, opts), do: Keyword.get(opts, :url) <> "/sign"
+  defp url(:collect, opts), do: Keyword.get(opts, :url) <> "/collect"
+  defp url(:cancel, opts), do: Keyword.get(opts, :url) <> "/cancel"
 
-  defp ssl_options(opts), do: [certfile: Keyword.get(opts, :cert_file, @cert_file)]
+  defp ssl_options(opts), do: [certfile: Keyword.get(opts, :cert_file)]
 
   defp handle_response({:ok, %HTTPoison.Response{status_code: 200, body: body}}, :collect) do
     Poison.decode(body, as: %ExBankID.Collect.Response{})
