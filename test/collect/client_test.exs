@@ -32,7 +32,8 @@ defmodule Test.Auth.Collect do
 
     assert ^expected_response =
              ExBankID.collect("131daac9-16c6-4618-beb0-365768f37288",
-               url: Test.Helpers.get_url(bypass.port())
+               url: Test.Helpers.get_url(bypass.port()),
+               cert_file: Test.Helpers.cert_file()
              )
   end
 
@@ -64,7 +65,8 @@ defmodule Test.Auth.Collect do
                  qrStartToken: "67df3917-fa0d-44e5-b327-edcc928297f8",
                  qrStartSecret: "d28db9a7-4cde-429e-a983-359be676944c"
                },
-               url: Test.Helpers.get_url(bypass.port())
+               url: Test.Helpers.get_url(bypass.port()),
+               cert_file: Test.Helpers.cert_file()
              )
   end
 
@@ -91,7 +93,8 @@ defmodule Test.Auth.Collect do
                  qrStartToken: "67df3917-fa0d-44e5-b327-edcc928297f8",
                  qrStartSecret: "d28db9a7-4cde-429e-a983-359be676944c"
                },
-               url: Test.Helpers.get_url(bypass.port())
+               url: Test.Helpers.get_url(bypass.port()),
+               cert_file: Test.Helpers.cert_file()
              )
   end
 
@@ -133,7 +136,8 @@ defmodule Test.Auth.Collect do
                  qrStartToken: "67df3917-fa0d-44e5-b327-edcc928297f8",
                  qrStartSecret: "d28db9a7-4cde-429e-a983-359be676944c"
                },
-               url: Test.Helpers.get_url(bypass.port())
+               url: Test.Helpers.get_url(bypass.port()),
+               cert_file: Test.Helpers.cert_file()
              )
   end
 end
