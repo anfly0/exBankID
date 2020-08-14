@@ -25,11 +25,7 @@ defmodule Test.Auth.Sign do
               autoStartToken: "7c40b5c9-fa74-49cf-b98c-bfe651f9a7c6",
               qrStartToken: "67df3917-fa0d-44e5-b327-edcc928297f8",
               qrStartSecret: "d28db9a7-4cde-429e-a983-359be676944c"
-            }} =
-             ExBankID.sign("1.1.1.1", "Visible data",
-               url: Test.Helpers.get_url(bypass.port()),
-               cert_file: Test.Helpers.cert_file()
-             )
+            }} = ExBankID.sign("1.1.1.1", "Visible data", url: Test.Helpers.get_url(bypass.port()))
   end
 
   test "client handles successful sign request with personal number", %{bypass: bypass} do
@@ -50,8 +46,7 @@ defmodule Test.Auth.Sign do
             }} =
              ExBankID.sign("1.1.1.1", "Visible data",
                url: Test.Helpers.get_url(bypass.port()),
-               personal_number: "190000000000",
-               cert_file: Test.Helpers.cert_file()
+               personal_number: "190000000000"
              )
   end
 
@@ -76,8 +71,7 @@ defmodule Test.Auth.Sign do
              ExBankID.sign("1.1.1.1", "Visible data",
                url: Test.Helpers.get_url(bypass.port()),
                personal_number: "190000000000",
-               user_non_visible_data: "Not visible data",
-               cert_file: Test.Helpers.cert_file()
+               user_non_visible_data: "Not visible data"
              )
   end
 end
