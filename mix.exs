@@ -1,10 +1,12 @@
 defmodule ExBankID.MixProject do
   use Mix.Project
 
+  @version "0.1.1"
+
   def project do
     [
       app: :ex_bank_id,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -12,7 +14,8 @@ defmodule ExBankID.MixProject do
       preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
       deps: deps(),
       description: description(),
-      package: package()
+      package: package(),
+      docs: docs()
     ]
   end
 
@@ -46,6 +49,19 @@ defmodule ExBankID.MixProject do
       files: ~w(lib .formatter.exs mix.exs README* LICENSE* assets),
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/anfly0/exBankID"}
+    ]
+  end
+
+  defp docs() do
+    [
+      main: "readme",
+      name: "ExBankID",
+      source_ref: "v#{@version}",
+      canonical: "http://hexdocs.pm/ExBankID",
+      source_url: "https://github.com/anfly0/exBankID",
+      extras: [
+        "README.md"
+      ]
     ]
   end
 
