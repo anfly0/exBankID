@@ -4,11 +4,39 @@
 [![Coverage Status](https://coveralls.io/repos/github/anfly0/exBankID/badge.svg?branch=master)](https://coveralls.io/github/anfly0/exBankID?branch=master)
 ![hex version](https://img.shields.io/hexpm/v/exbankid)
 ## Introduction
-exBankID is a simple stateless elixir client for the Swedish BankID API.
+ExBankID is a simple stateless elixir client for the [Swedish BankID API](https://www.bankid.com/).
 
 ## Installation
 This library is available as a package on [hex.pm](https://hex.pm/packages/exBankID) and can be installed by
 adding ```{:ex_bank_id, "~> 0.1.0", hex: :exBankID}``` to your list of dependencies in ```mix.exs```
+
+## Configuration
+```elixir
+# config/config.exs
+
+config :ex_bank_id,
+  # Using a custom http client. Should be a module that implements ExBankID.Http.Client.
+  # Defaults to ExBankID.Http.Default
+  http_client: MyApp.Http.Client
+
+  # The path to the client cert file used to authenticate with the BankID API
+  # Defaults to the test cert in the assets directory.
+  cert_file: "/path/to/cert/file.pem"
+
+  # BankID API url
+  # Defaults to "https://appapi2.test.bankid.com/rp/v5.1/"
+  url: "https://appapi2.bankid.com/rp/<api version 5 or 5.1>/"
+
+```
+All the above configuration options can be overridden by setting the new value for the corresponding key in the opts Keyword list passed to any of the functions in ExBankID.
+
+__Example:__
+```elixir
+# This will override the url in the config.
+ExBankID.auth("1.1.1.1", url: "my.mock-server.local")
+```
+
+
 ## Basic usage
 
 ```elixir
@@ -26,7 +54,7 @@ iex> {:ok, authentication} = ExBankID.auth("1.1.1.1", personal_number: "19000000
    qrStartToken: "3fb97679-98cb-42da-afe6-62aecbaaab7e"
  }}
 
-# Collect the status of the initiated authentication ether with the orderRef
+# Collect the status of the initiated authentication either with the orderRef
 # or with the ExBankID.Auth.Response struct
 iex> {:ok, collect_response} = ExBankID.collect("9b69419c-b3ac-4f7c-9796-bf54f1a4e40b")
 {:ok,
@@ -48,8 +76,8 @@ iex> {:ok, collect_response} = ExBankID.collect("9b69419c-b3ac-4f7c-9796-bf54f1a
    status: "pending"
  }}
 
- #or
- iex> {:ok, collect_response} = ExBankID.collect(authentication) # Using ExBankID.Auth.Response struct
+ # Using ExBankID.Auth.Response struct
+ iex> {:ok, collect_response} = ExBankID.collect(authentication)
 {:ok,
  %ExBankID.Collect.Response{
    completionData: %ExBankID.Collect.CompletionData{
