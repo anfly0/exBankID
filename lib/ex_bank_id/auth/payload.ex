@@ -12,17 +12,17 @@ defmodule ExBankID.Auth.Payload do
   Returns a Payload struct containing the given ip address and personal number.
 
   ## Examples
-    iex> ExBankID.Auth.Payload.new("1.1.1.1")
-    %ExBankID.Auth.Payload{endUserIp: "1.1.1.1"}
+      iex> ExBankID.Auth.Payload.new("1.1.1.1")
+      %ExBankID.Auth.Payload{endUserIp: "1.1.1.1"}
 
-    iex> ExBankID.Auth.Payload.new("qwerty")
-    {:error, "Invalid ip address: qwerty"}
+      iex> ExBankID.Auth.Payload.new("qwerty")
+      {:error, "Invalid ip address: qwerty"}
 
-    iex> ExBankID.Auth.Payload.new("1.1.1.1", [personal_number: "190000000000"])
-    %ExBankID.Auth.Payload{endUserIp: "1.1.1.1", personalNumber: "190000000000"}
+      iex> ExBankID.Auth.Payload.new("1.1.1.1", [personal_number: "190000000000"])
+      %ExBankID.Auth.Payload{endUserIp: "1.1.1.1", personalNumber: "190000000000"}
 
-    iex> ExBankID.Auth.Payload.new("1.1.1.1", [personal_number: "Not a personal number"])
-    {:error, "Invalid personal number"}
+      iex> ExBankID.Auth.Payload.new("1.1.1.1", [personal_number: "Not a personal number"])
+      {:error, "Invalid personal number"}
   """
   def new(ip_address, opts \\ []) when is_binary(ip_address) and is_list(opts) do
     with {:ok, ip_address} <- check_ip_address(ip_address),
