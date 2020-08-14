@@ -9,6 +9,10 @@ defmodule ExBankID.Cancel do
     cert_file: [
       type: :string,
       required: true
+    ],
+    http_client: [
+      type: :atom,
+      default: Application.get_env(:ex_bank_id, :http_client, ExBankID.Http.Default)
     ]
   ]
   @doc "Supported options:\n#{NimbleOptions.docs(@options)}"

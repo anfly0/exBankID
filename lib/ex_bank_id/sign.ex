@@ -16,6 +16,10 @@ defmodule ExBankID.Sign do
     ],
     user_non_visible_data: [
       type: :string
+    ],
+    http_client: [
+      type: :atom,
+      default: Application.get_env(:ex_bank_id, :http_client, ExBankID.Http.Default)
     ]
   ]
   @doc "Supported options:\n#{NimbleOptions.docs(@options)}"

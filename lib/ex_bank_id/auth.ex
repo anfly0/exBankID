@@ -11,6 +11,10 @@ defmodule ExBankID.Auth do
     personal_number: [
       type: :string
       # TODO: Add validator
+    ],
+    http_client: [
+      type: :atom,
+      default: Application.get_env(:ex_bank_id, :http_client, ExBankID.Http.Default)
     ]
   ]
   @doc "Supported options:\n#{NimbleOptions.docs(@options)}"
