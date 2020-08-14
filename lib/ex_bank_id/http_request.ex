@@ -36,11 +36,13 @@ defmodule ExBankID.HttpRequest do
   end
 
   defp do_send_request(action, payload, opts) do
-    HTTPoison.post(
+    client = Keyword.get(opts, :http_client)
+
+    client.post(
       url(action, opts),
       encode_payload(payload),
       @headers,
-      ssl: ssl_options(opts)
+      Keyword.get(opts, :cert_file)
     )
     |> handle_response(action)
   end
@@ -50,25 +52,23 @@ defmodule ExBankID.HttpRequest do
   defp url(:collect, opts), do: Keyword.get(opts, :url) <> "/collect"
   defp url(:cancel, opts), do: Keyword.get(opts, :url) <> "/cancel"
 
-  defp ssl_options(opts), do: [certfile: Keyword.get(opts, :cert_file)]
-
-  defp handle_response({:ok, %HTTPoison.Response{status_code: 200, body: body}}, :collect) do
+  defp handle_response({:ok, %ExBankID.Http.Response{status_code: 200, body: body}}, :collect) do
     Poison.decode(body, as: %ExBankID.Collect.Response{})
   end
 
-  defp handle_response({:ok, %HTTPoison.Response{status_code: 200, body: body}}, :auth) do
+  defp handle_response({:ok, %ExBankID.Http.Response{status_code: 200, body: body}}, :auth) do
     Poison.decode(body, as: %ExBankID.Auth.Response{})
   end
 
-  defp handle_response({:ok, %HTTPoison.Response{status_code: 200, body: body}}, :sign) do
+  defp handle_response({:ok, %ExBankID.Http.Response{status_code: 200, body: body}}, :sign) do
     Poison.decode(body, as: %ExBankID.Sign.Response{})
   end
 
-  defp handle_response({:ok, %HTTPoison.Response{status_code: 200, body: body}}, :cancel) do
+  defp handle_response({:ok, %ExBankID.Http.Response{status_code: 200, body: body}}, :cancel) do
     Poison.decode(body)
   end
 
-  defp handle_response({:ok, %HTTPoison.Response{status_code: code, body: body}}, _) do
+  defp handle_response({:ok, %ExBankID.Http.Response{status_code: code, body: body}}, _) do
     case Poison.decode(body, as: %ExBankID.Error.Api{}) do
       {:ok, data} ->
         {:error, data}
@@ -78,7 +78,7 @@ defmodule ExBankID.HttpRequest do
     end
   end
 
-  defp handle_response({:error, %HTTPoison.Error{reason: reason}}, _) do
+  defp handle_response({:error, reason}, _) do
     {:error, reason}
   end
 
