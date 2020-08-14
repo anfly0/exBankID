@@ -2,7 +2,7 @@ defmodule ExBankID.Auth do
   @options [
     url: [
       type: :string,
-      default: Application.get_env(:ex_bank_id, :cert_file, "https://appapi2.test.bankid.com/rp/v5.1/")
+      default: Application.get_env(:ex_bank_id, :url, "https://appapi2.test.bankid.com/rp/v5.1/")
     ],
     cert_file: [
       type: :string,
