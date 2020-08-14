@@ -4,11 +4,15 @@ defmodule ExBankID.Collect do
   @options [
     url: [
       type: :string,
-      default: "https://appapi2.test.bankid.com/rp/v5.1/"
+      default: Application.get_env(:ex_bank_id, :cert_file, "https://appapi2.test.bankid.com/rp/v5.1/")
     ],
     cert_file: [
       type: :string,
-      required: true
+      default: Application.get_env(:ex_bank_id, :cert_file, __DIR__ <> "/../../assets/test.pem")
+    ],
+    http_client: [
+      type: :atom,
+      default: Application.get_env(:ex_bank_id, :http_client, ExBankID.Http.Default)
     ]
   ]
   @doc "Supported options:\n#{NimbleOptions.docs(@options)}"
