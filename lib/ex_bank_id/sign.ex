@@ -1,32 +1,33 @@
 defmodule ExBankID.Sign do
   alias ExBankID.Sign
 
-  @options [
-    url: [
-      type: :string,
-      default: Application.get_env(:ex_bank_id, :url, "https://appapi2.test.bankid.com/rp/v5.1/")
-    ],
-    cert_file: [
-      type: :string,
-      default: Application.get_env(:ex_bank_id, :cert_file, __DIR__ <> "/../../assets/test.pem")
-    ],
-    personal_number: [
-      type: :string
-      # TODO: Add validator
-    ],
-    user_non_visible_data: [
-      type: :string
-    ],
-    http_client: [
-      type: :atom,
-      default: Application.get_env(:ex_bank_id, :http_client, ExBankID.Http.Default)
+  defp options() do
+    [
+      url: [
+        type: :string,
+        default: Application.get_env(:ex_bank_id, :url, "https://appapi2.test.bankid.com/rp/v5.1/")
+      ],
+      cert_file: [
+        type: :string,
+        default: Application.get_env(:ex_bank_id, :cert_file, __DIR__ <> "/../../assets/test.pem")
+      ],
+      personal_number: [
+        type: :string
+        # TODO: Add validator
+      ],
+      user_non_visible_data: [
+        type: :string
+      ],
+      http_client: [
+        type: :atom,
+        default: Application.get_env(:ex_bank_id, :http_client, ExBankID.Http.Default)
+      ]
     ]
-  ]
-  @doc "Supported options:\n#{NimbleOptions.docs(@options)}"
+  end
 
   def sign(ip_address, user_visible_data, opts \\ [])
       when is_binary(ip_address) and is_binary(user_visible_data) and is_list(opts) do
-    with {:ok, opts} <- NimbleOptions.validate(opts, @options),
+    with {:ok, opts} <- NimbleOptions.validate(opts, options()),
          payload = %Sign.Payload{} <- Sign.Payload.new(ip_address, user_visible_data, opts) do
       ExBankID.HttpRequest.send_request(payload, opts)
     end
