@@ -8,7 +8,7 @@ ExBankID is a simple stateless elixir client for the [Swedish BankID API](https:
 
 ## Installation
 This library is available as a package on [hex.pm](https://hex.pm/packages/exBankID) and can be installed by
-adding ```{:ex_bank_id, "~> 0.1.0", hex: :exBankID}``` to your list of dependencies in ```mix.exs```
+adding ```{:ex_bank_id, "~> 0.1.1", hex: :exBankID}``` to your list of dependencies in ```mix.exs```
 
 ## Configuration
 ```elixir
@@ -40,9 +40,6 @@ ExBankID.auth("1.1.1.1", url: "my.mock-server.local")
 ## Basic usage
 
 ```elixir
-
-# Config - all functions in the ExBankID takes the following optional argument
-# [url: "url to BankID API", cert_file: "/path/to/your/BankID/certificate.pem"]
 
 # Authenticate with ip address and optionally the personal number (12 digits)
 iex> {:ok, authentication} = ExBankID.auth("1.1.1.1", personal_number: "190000000000")
