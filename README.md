@@ -8,7 +8,11 @@ ExBankID is a simple stateless elixir client for the [Swedish BankID API](https:
 
 ## Installation
 This library is available as a package on [hex.pm](https://hex.pm/packages/exBankID) and can be installed by
-adding ```{:ex_bank_id, "~> 0.1.1", hex: :exBankID}``` to your list of dependencies in ```mix.exs```
+adding ```{:ex_bank_id, "~> 0.1.1", hex: :exBankID}``` to your list of dependencies in ```mix.exs```.
+### Optional dependencies:
+```elixir
+{:poison, "~> 3.1"} # Add this to your deps if you want to use the default json handler
+```
 
 ## Configuration
 ```elixir
