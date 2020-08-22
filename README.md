@@ -23,6 +23,10 @@ config :ex_bank_id,
   # Defaults to ExBankID.Http.Default
   http_client: MyApp.Http.Client
 
+  # Using a custom json handler. Should be a module that implements ExBankID.Json.Handler.
+  # Defaults to ExBankID.Json.Default
+  json_handler: MyApp.Json.Handler
+
   # The path to the client cert file used to authenticate with the BankID API
   # Defaults to the test cert in the assets directory.
   cert_file: "/path/to/cert/file.pem"
@@ -38,6 +42,9 @@ __Example:__
 ```elixir
 # This will override the url in the config.
 ExBankID.auth("1.1.1.1", url: "my.mock-server.local")
+
+# This will override the configured/default json handler and url
+ExBankID.auth("1.1.1.1", json_handler: Custom.Json.Handler, url: "my.mock-server.local")
 ```
 
 
