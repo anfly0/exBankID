@@ -21,5 +21,5 @@ defmodule ExBankID.Http.Client do
               http_opts :: term
             ) ::
               {:ok, Response.t()}
-              | {:error, %{reason: any}}
+              | {:error, String.t()}
 end

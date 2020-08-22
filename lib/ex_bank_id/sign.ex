@@ -21,6 +21,10 @@ defmodule ExBankID.Sign do
       http_client: [
         type: :atom,
         default: Application.get_env(:ex_bank_id, :http_client, ExBankID.Http.Default)
+      ],
+      json_handler: [
+        type: :atom,
+        default: Application.get_env(:ex_bank_id, :json_handler, ExBankID.Json.Default)
       ]
     ]
   end
