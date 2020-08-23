@@ -12,6 +12,7 @@ adding ```{:ex_bank_id, "~> 0.1.1", hex: :exBankID}``` to your list of dependenc
 ### Optional dependencies:
 ```elixir
 {:poison, "~> 3.1"} # Add this to your deps if you want to use the default json handler
+{:httpoison, "~> 1.7"} # Add this to your deps if you want to use the default http client
 ```
 
 ## Configuration
