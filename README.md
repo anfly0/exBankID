@@ -8,7 +8,11 @@ ExBankID is a simple stateless elixir client for the [Swedish BankID API](https:
 
 ## Installation
 This library is available as a package on [hex.pm](https://hex.pm/packages/exBankID) and can be installed by
-adding ```{:ex_bank_id, "~> 0.1.1", hex: :exBankID}``` to your list of dependencies in ```mix.exs```
+adding ```{:ex_bank_id, "~> 0.1.1", hex: :exBankID}``` to your list of dependencies in ```mix.exs```.
+### Optional dependencies:
+```elixir
+{:poison, "~> 3.1"} # Add this to your deps if you want to use the default json handler
+```
 
 ## Configuration
 ```elixir
@@ -18,6 +22,10 @@ config :ex_bank_id,
   # Using a custom http client. Should be a module that implements ExBankID.Http.Client.
   # Defaults to ExBankID.Http.Default
   http_client: MyApp.Http.Client
+
+  # Using a custom json handler. Should be a module that implements ExBankID.Json.Handler.
+  # Defaults to ExBankID.Json.Default
+  json_handler: MyApp.Json.Handler
 
   # The path to the client cert file used to authenticate with the BankID API
   # Defaults to the test cert in the assets directory.
@@ -34,6 +42,9 @@ __Example:__
 ```elixir
 # This will override the url in the config.
 ExBankID.auth("1.1.1.1", url: "my.mock-server.local")
+
+# This will override the configured/default json handler and url
+ExBankID.auth("1.1.1.1", json_handler: Custom.Json.Handler, url: "my.mock-server.local")
 ```
 
 

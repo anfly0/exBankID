@@ -37,14 +37,15 @@ defmodule ExBankID.HttpRequest do
 
   defp do_send_request(action, payload, opts) do
     client = Keyword.get(opts, :http_client)
+    json_handler = Keyword.get(opts, :json_handler)
 
     client.post(
       url(action, opts),
-      encode_payload(payload),
+      encode_payload(payload, json_handler),
       @headers,
       Keyword.get(opts, :cert_file)
     )
-    |> handle_response(action)
+    |> handle_response(action, json_handler)
   end
 
   defp url(:auth, opts), do: Keyword.get(opts, :url) <> "/auth"
@@ -52,24 +53,24 @@ defmodule ExBankID.HttpRequest do
   defp url(:collect, opts), do: Keyword.get(opts, :url) <> "/collect"
   defp url(:cancel, opts), do: Keyword.get(opts, :url) <> "/cancel"
 
-  defp handle_response({:ok, %ExBankID.Http.Response{status_code: 200, body: body}}, :collect) do
-    Poison.decode(body, as: %ExBankID.Collect.Response{})
+  defp handle_response({:ok, %ExBankID.Http.Response{status_code: 200, body: body}}, :collect, json_handler) do
+    json_handler.decode(body, %ExBankID.Collect.Response{})
   end
 
-  defp handle_response({:ok, %ExBankID.Http.Response{status_code: 200, body: body}}, :auth) do
-    Poison.decode(body, as: %ExBankID.Auth.Response{})
+  defp handle_response({:ok, %ExBankID.Http.Response{status_code: 200, body: body}}, :auth, json_handler) do
+    json_handler.decode(body, %ExBankID.Auth.Response{})
   end
 
-  defp handle_response({:ok, %ExBankID.Http.Response{status_code: 200, body: body}}, :sign) do
-    Poison.decode(body, as: %ExBankID.Sign.Response{})
+  defp handle_response({:ok, %ExBankID.Http.Response{status_code: 200, body: body}}, :sign, json_handler) do
+    json_handler.decode(body, %ExBankID.Sign.Response{})
   end
 
-  defp handle_response({:ok, %ExBankID.Http.Response{status_code: 200, body: body}}, :cancel) do
-    Poison.decode(body)
+  defp handle_response({:ok, %ExBankID.Http.Response{status_code: 200, body: body}}, :cancel, json_handler) do
+    json_handler.decode(body)
   end
 
-  defp handle_response({:ok, %ExBankID.Http.Response{status_code: code, body: body}}, _) do
-    case Poison.decode(body, as: %ExBankID.Error.Api{}) do
+  defp handle_response({:ok, %ExBankID.Http.Response{status_code: code, body: body}}, _, json_handler) do
+    case json_handler.decode(body, %ExBankID.Error.Api{}) do
       {:ok, data} ->
         {:error, data}
 
@@ -78,15 +79,15 @@ defmodule ExBankID.HttpRequest do
     end
   end
 
-  defp handle_response({:error, reason}, _) do
+  defp handle_response({:error, reason}, _, _) do
     {:error, reason}
   end
 
-  defp encode_payload(payload) do
+  defp encode_payload(payload, json_handler) do
     payload
     |> Map.from_struct()
     |> Enum.reject(fn {_key, value} -> is_nil(value) end)
     |> Map.new()
-    |> Poison.encode!()
+    |> json_handler.encode!()
   end
 end
