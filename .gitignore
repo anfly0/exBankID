@@ -24,3 +24,4 @@ bankid_http_client-*.tar
 
 /config/
 
+*.todo
