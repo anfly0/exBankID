@@ -2,7 +2,7 @@
 ![license: MIT](https://img.shields.io/github/license/anfly0/exBankID)
 ![test](https://img.shields.io/github/workflow/status/anfly0/exbankid/Elixir%20CI/master)
 [![Coverage Status](https://coveralls.io/repos/github/anfly0/exBankID/badge.svg?branch=master)](https://coveralls.io/github/anfly0/exBankID?branch=master)
-![hex version](https://img.shields.io/hexpm/v/exbankid)
+![hex version](https://img.shields.io/hexpm/v/exBankID)
 ## Introduction
 ExBankID is a simple stateless elixir client for the [Swedish BankID API](https://www.bankid.com/).
 
