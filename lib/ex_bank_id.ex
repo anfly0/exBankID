@@ -32,6 +32,15 @@ defmodule ExBankID do
   @spec cancel(String.t() | %ExBankID.Sign.Response{} | %ExBankID.Auth.Response{},
           url: String.t(),
           cert_file: String.t()
-        ) :: {:error, %ExBankID.Error.Api{} | binary()} | {:error, NimbleOptions.ValidationError.t()} | {:ok, %{}}
+        ) ::
+          {:error, %ExBankID.Error.Api{} | binary()}
+          | {:error, NimbleOptions.ValidationError.t()}
+          | {:ok, %{}}
   defdelegate cancel(order_ref, opts \\ []), to: ExBankID.Cancel
+
+  @spec static_qr(%{
+          __struct__: ExBankID.Auth.Response | ExBankID.Sign.Response,
+          autoStartToken: binary
+        }) :: <<_::64, _::_*8>>
+  defdelegate static_qr(response), to: ExBankID.Qr
 end
