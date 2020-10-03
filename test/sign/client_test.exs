@@ -50,6 +50,28 @@ defmodule Test.Auth.Sign do
              )
   end
 
+  test "client handles successful sign request with request", %{bypass: bypass} do
+    Bypass.expect_once(bypass, "POST", "/sign", fn conn ->
+      Plug.Conn.resp(
+        conn,
+        200,
+        ~s<{"orderRef":"131daac9-16c6-4618-beb0-365768f37288","autoStartToken":"7c40b5c9-fa74-49cf-b98c-bfe651f9a7c6","qrStartToken":"67df3917-fa0d-44e5-b327-edcc928297f8","qrStartSecret":"d28db9a7-4cde-429e-a983-359be676944c"}>
+      )
+    end)
+
+    assert {:ok,
+            %ExBankID.Sign.Response{
+              orderRef: "131daac9-16c6-4618-beb0-365768f37288",
+              autoStartToken: "7c40b5c9-fa74-49cf-b98c-bfe651f9a7c6",
+              qrStartToken: "67df3917-fa0d-44e5-b327-edcc928297f8",
+              qrStartSecret: "d28db9a7-4cde-429e-a983-359be676944c"
+            }} =
+             ExBankID.sign("1.1.1.1", "Visible data",
+               url: Test.Helpers.get_url(bypass.port()),
+               requirement: %{issuerCn: ["test"]}
+             )
+  end
+
   test "client handles successful sign request with personal number and non visible data", %{
     bypass: bypass
   } do

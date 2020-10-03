@@ -15,6 +15,7 @@ defmodule ExBankID.Sign do
         type: :string
         # TODO: Add validator
       ],
+      requirement: [],
       user_non_visible_data: [
         type: :string
       ],

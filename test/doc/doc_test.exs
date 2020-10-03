@@ -3,4 +3,5 @@ defmodule ExBankID.Auth.PayloadTest do
   doctest ExBankID.Auth.Payload
   doctest ExBankID.Sign.Payload
   doctest ExBankID.Cancel.Payload
+  doctest ExBankID.PayloadHelpers
 end
