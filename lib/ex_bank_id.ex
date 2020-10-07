@@ -38,9 +38,6 @@ defmodule ExBankID do
           | {:ok, %{}}
   defdelegate cancel(order_ref, opts \\ []), to: ExBankID.Cancel
 
-  @spec static_qr(%{
-          __struct__: ExBankID.Auth.Response | ExBankID.Sign.Response,
-          autoStartToken: binary
-        }) :: <<_::64, _::_*8>>
+  @spec static_qr(%ExBankID.Sign.Response{} | %ExBankID.Auth.Response{}) :: <<_::64, _::_*8>>
   defdelegate static_qr(response), to: ExBankID.Qr
 end
