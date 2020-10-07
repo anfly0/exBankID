@@ -13,6 +13,7 @@ defmodule ExBankID.Auth do
         type: :string
         # TODO: Add validator
       ],
+      requirement: [],
       http_client: [
         type: :atom,
         default: Application.get_env(:ex_bank_id, :http_client, ExBankID.Http.Default)

@@ -2,12 +2,15 @@ defmodule ExBankID.Auth.Payload do
   @moduledoc """
   Provides the struct used when initiating a authentication
   """
-  defstruct [:endUserIp, :personalNumber]
+  defstruct [:endUserIp, :personalNumber, :requirement]
+
+  import ExBankID.PayloadHelpers
 
   @type reason :: binary()
 
   @spec new(binary, Keyword.t()) ::
-          {:error, reason} | %__MODULE__{endUserIp: binary, personalNumber: binary() | nil}
+          {:error, reason}
+          | %__MODULE__{endUserIp: binary, personalNumber: binary(), requirement: map() | nil}
   @doc """
   Returns a Payload struct containing the given ip address and personal number.
 
@@ -22,41 +25,32 @@ defmodule ExBankID.Auth.Payload do
       %ExBankID.Auth.Payload{endUserIp: "1.1.1.1", personalNumber: "190000000000"}
 
       iex> ExBankID.Auth.Payload.new("1.1.1.1", [personal_number: "Not a personal number"])
-      {:error, "Invalid personal number"}
+      {:error, "Invalid personal number: Not a personal number"}
+
+      iex> ExBankID.Auth.Payload.new("1.1.1.1", [requirement: %{allowFingerprint: :false}])
+      %ExBankID.Auth.Payload{endUserIp: "1.1.1.1", requirement: %{allowFingerprint: :false}}
+
+      iex> ExBankID.Auth.Payload.new("1.1.1.1", [requirement: %{cardReader: "class2", tokenStartRequired: :false}])
+      %ExBankID.Auth.Payload{endUserIp: "1.1.1.1", requirement: %{cardReader: "class2", tokenStartRequired: :false}}
+
+      iex> ExBankID.Auth.Payload.new("1.1.1.1", [requirement: %{issuerCn: ["Nordea CA for Smartcard users 12", "Nordea CA for Softcert users 13"] }])
+      %ExBankID.Auth.Payload{endUserIp: "1.1.1.1", requirement: %{issuerCn: ["Nordea CA for Smartcard users 12", "Nordea CA for Softcert users 13"]}}
+
+      iex> ExBankID.Auth.Payload.new("1.1.1.1", [requirement: %{certificatePolicies: ["1.2.752.78.1.2", "1.2.752.78.*", "1.2.752.78.1.*"] }])
+      %ExBankID.Auth.Payload{endUserIp: "1.1.1.1", requirement: %{certificatePolicies: ["1.2.752.78.1.2", "1.2.752.78.*", "1.2.752.78.1.*"] }}
+
+      iex> ExBankID.Auth.Payload.new("1.1.1.1", [requirement: %{notRealRequirement: ["shouldFail"]}])
+      {:error, "Invalid requirement"}
   """
   def new(ip_address, opts \\ []) when is_binary(ip_address) and is_list(opts) do
     with {:ok, ip_address} <- check_ip_address(ip_address),
-         {:ok, personal_number} <- check_personal_number(Keyword.get(opts, :personal_number)) do
-      %__MODULE__{endUserIp: ip_address, personalNumber: personal_number}
+         {:ok, personal_number} <- check_personal_number(Keyword.get(opts, :personal_number)),
+         {:ok, requirement} <- check_requirement(Keyword.get(opts, :requirement)) do
+      %__MODULE__{
+        endUserIp: ip_address,
+        personalNumber: personal_number,
+        requirement: requirement
+      }
     end
-  end
-
-  defp check_ip_address(ip_address)
-       when is_binary(ip_address) do
-    ip_address_cl = String.to_charlist(ip_address)
-
-    case :inet.parse_strict_address(ip_address_cl) do
-      {:ok, _} ->
-        {:ok, ip_address}
-
-      _ ->
-        {:error, "Invalid ip address: #{ip_address}"}
-    end
-  end
-
-  defp check_personal_number(personal_number)
-       when is_binary(personal_number) do
-    # TODO: Implement relevant personal number check.
-    case String.length(personal_number) do
-      12 ->
-        {:ok, personal_number}
-
-      _ ->
-        {:error, "Invalid personal number"}
-    end
-  end
-
-  defp check_personal_number(nil) do
-    {:ok, nil}
   end
 end
