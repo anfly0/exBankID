@@ -39,7 +39,7 @@ defmodule ExBankID.MixProject do
       {:uuid, "~> 1.1"},
       {:credo, "~> 1.4", only: [:dev], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:bypass, "~> 1.0", only: :test},
+      {:bypass, "~> 2.0", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:nimble_options, "~> 0.3.0"}
