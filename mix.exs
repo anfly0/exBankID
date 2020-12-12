@@ -35,7 +35,7 @@ defmodule ExBankID.MixProject do
   defp deps do
     [
       {:httpoison, "~> 1.7", optional: true},
-      {:poison, "~> 3.1", optional: true},
+      {:poison, "~> 4.0 or ~> 3.1", optional: true},
       {:uuid, "~> 1.1"},
       {:credo, "~> 1.4", only: [:dev], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
