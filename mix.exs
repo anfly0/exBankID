@@ -34,7 +34,7 @@ defmodule ExBankID.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:httpoison, "~> 1.7", optional: true},
+      {:httpoison, "~> 1.8", optional: true},
       {:poison, "~> 4.0 or ~> 3.1", optional: true},
       {:uuid, "~> 1.1"},
       {:credo, "~> 1.4", only: [:dev], runtime: false},
