@@ -11,7 +11,7 @@ defmodule ExBankID.Cancel.Payload do
       iex> ExBankID.Cancel.Payload.new("131daac9-16c6-4618-beb0-365768f37288")
       %ExBankID.Cancel.Payload{orderRef: "131daac9-16c6-4618-beb0-365768f37288"}
 
-      iex> ExBankID.Cancel.Payload.new("Not-a-valid-UUID")
+      iex> ExBankID.Cancel.Payload.new("NotAValidUUID")
       {:error, "OrderRef is not a valid UUID"}
 
       iex> %ExBankID.Auth.Response{orderRef: "131daac9-16c6-4618-beb0-365768f37288"} |> ExBankID.Cancel.Payload.new()
